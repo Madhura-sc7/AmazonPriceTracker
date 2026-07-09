@@ -72,6 +72,9 @@ try:
                 "name") + '-\t' +' Available at target price ' + ' current price - ' + str(my_product_price) + '\n')
 
         else:
+
+
+            
             print("still at current price")
 
 finally:
