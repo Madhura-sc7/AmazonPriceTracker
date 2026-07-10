@@ -67,7 +67,6 @@ try:
         print(my_product_price)
 
         if my_product_price < every_product.get("target_price"):
-        if my_product_price > every_product.get("target_price"):
             print("Available at your required price")
             result_file.write(every_product.get(
                 "name") + '-\t' +' Available at target price ' + ' current price - ' + str(my_product_price) + '\n')
