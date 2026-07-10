@@ -71,10 +71,7 @@ try:
             result_file.write(every_product.get(
                 "name") + '-\t' +' Available at target price ' + ' current price - ' + str(my_product_price) + '\n')
 
-        else:
-
-
-            
+        else:   
             print("still at current price")
 
 finally:
