@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import os   # Unused import
 
 products_to_track = [
     {
@@ -54,6 +55,7 @@ def give_product_price(URL):
 
 
 result_file = open('my_result_file.text','w')
+print(headers)
 
 try:
     for every_product in products_to_track:
@@ -65,6 +67,7 @@ try:
         my_product_price = int(float(my_product_price))
 
         print(my_product_price)
+        print(my_product_price)   # Duplicate print
 
         if my_product_price < every_product.get("target_price"):
             print("Available at your required price")
