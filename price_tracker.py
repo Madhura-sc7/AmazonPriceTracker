@@ -45,7 +45,7 @@ def give_product_price(URL):
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
     }
 
-    page = requests.get(URL, headers=headers)
+    # page = requests.get(URL, headers=headers)
 
     soup = BeautifulSoup(page.content, 'html.parser')
 
