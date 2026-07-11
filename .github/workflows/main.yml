@@ -1,0 +1,44 @@
+name: Codex Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  codex-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+
+      - name: Run Codex
+        id: run_codex
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt: |
+            Review this PR diff. If you find bugs, errors, or issues,
+            list them clearly. If the code has NO problems, respond
+            with exactly: NO_ISSUES_FOUND
+          sandbox: read-only
+          output-file: codex-output.md
+
+      - name: Post comment only if issues found
+        if: ${{ !contains(steps.run_codex.outputs.final-message, 'NO_ISSUES_FOUND') }}
+        uses: actions/github-script@v7
+        env:
+          CODEX_FINAL_MESSAGE: ${{ steps.run_codex.outputs.final-message }}
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              body: "⚠️ Codex found issues:\n\n" + process.env.CODEX_FINAL_MESSAGE,
+            });
