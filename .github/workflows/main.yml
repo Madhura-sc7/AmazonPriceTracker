@@ -12,8 +12,14 @@ jobs:
   codex-review:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - uses: openai/codex-action@v1
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt: |
+            Review the code changes in this pull request.
+            Look for bugs, unused imports, unreachable code, and bad practices.
+            List each issue clearly with the file and line number.
