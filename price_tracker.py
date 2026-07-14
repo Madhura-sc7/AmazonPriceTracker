@@ -52,6 +52,7 @@ def give_product_price(URL):
     product_price = soup.find("span", class_="a-price-whole")
 
     return product_price.get_text()
+    print(headers)
 
 
 result_file = open('my_result_file.text','w')
