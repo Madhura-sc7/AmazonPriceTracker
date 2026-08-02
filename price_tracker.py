@@ -51,7 +51,10 @@ def give_product_price(URL):
 
     product_price = soup.find("span", class_="a-price-whole")
 
-    return product_price.get_text()
+    if product_price is None:
+        raise Exception("Price not found. Amazon may have changed the page or blocked the request.")
+
+    return product_price.get_text().strip()
 
 
 result_file = open('result/my_result_file.text', 'r')
