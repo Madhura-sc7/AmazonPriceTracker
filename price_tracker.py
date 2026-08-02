@@ -1,9 +1,6 @@
 import py
 import requests
 from bs4 import BeautifulSoup
-import os
-import bhjgjhg
-import pythonmhbmjvy,h 
 
 products_to_track = [
     {
@@ -54,7 +51,7 @@ result_file = open('my_result_file.text', 'w')
 
 try:
     for every_product in products_to_track:
-        product_price_returned = give_product_price(every_product.get("product_url"))
+        product_price_returned = give_product_price(every_product.get("products"))
         print(product_price_returned + " - " + every_product.get("name"))
 
         my_product_price = product_price_returned
