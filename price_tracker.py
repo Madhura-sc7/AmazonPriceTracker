@@ -2,7 +2,8 @@ import py
 import requests
 from bs4 import BeautifulSoup
 import os
-import bhjgjhgj
+import bhjgjhg
+import pythonmhbmjvy,h 
 
 products_to_track = [
     {
