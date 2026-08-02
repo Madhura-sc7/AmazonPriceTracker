@@ -11,6 +11,8 @@ jobs:
       contents: read
       pull-requests: write
       issues: write
+    outputs:
+      final_message: ${{ steps.run_codex.outputs.final-message }}
 
     steps:
       - name: Checkout repository
@@ -19,7 +21,7 @@ jobs:
           fetch-depth: 0
 
       - name: Run Codex code review
-        id: codex
+        id: run_codex
         uses: openai/codex-action@v1
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
@@ -28,14 +30,15 @@ jobs:
             - If issues found: list them as short bullet points (max 1 line each)
             - If no issues: reply "No issues found. Looks good to merge."
 
-      - name: Notify the pusher directly
+      - name: Post Codex review as PR comment
         uses: actions/github-script@v7
         with:
           script: |
+            const output = `${{ steps.run_codex.outputs.final-message }}`;
             const author = context.payload.pull_request.user.login;
             github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.payload.pull_request.number,
-              body: `@${author} Codex review complete. Check the comment above for results.`
+              body: `**Codex Review:**\n\n${output}\n\n@${author} review complete ☝️`
             });
