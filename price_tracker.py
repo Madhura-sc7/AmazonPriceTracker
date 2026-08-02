@@ -54,7 +54,7 @@ def give_product_price(URL):
     return product_price.get_text()
 
 
-result_file = open('my_result_file.text','w')
+result_file = open('result/my_result_file.text', 'r')
 
 try:
     for every_product in products_to_track:
