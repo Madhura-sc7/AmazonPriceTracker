@@ -6,7 +6,7 @@ jobs:
   codex-review:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
       pull-requests: write
       issues: write
     outputs:
@@ -40,7 +40,6 @@ jobs:
           script: |
             const output = process.env.CODEX_OUTPUT || "No review content returned.";
             const author = context.payload.pull_request.user.login;
-            // Check if Codex found issues or not
             const noIssues = output.toLowerCase().includes("no issues found");
             const statusIcon = noIssues ? "✅" : "⚠️";
             const statusText = noIssues ? "No issues found" : "Issues found — please review";
@@ -50,7 +49,6 @@ jobs:
               issue_number: context.payload.pull_request.number,
               body: `**Codex Review:** ${statusIcon} ${statusText}\n\n${output}\n\n@${author} review complete ☝️`
             });
-      # This step fails if Codex found issues (blocks merge), passes if clean (allows merge)
       - name: Fail the check if issues were found
         env:
           CODEX_OUTPUT: ${{ steps.run_codex.outputs.final-message }}
@@ -63,15 +61,3 @@ jobs:
             echo "Issues were found by Codex review. Failing this check to block merge."
             exit 1
           fi
-      # This step only runs if everything above passed — merges the PR automatically
-      - name: Auto-merge the pull request
-        if: success()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            await github.rest.pulls.merge({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.payload.pull_request.number,
-              merge_method: "squash"
-            });
