@@ -66,7 +66,7 @@ try:
         my_product_price = my_product_price.replace(',', '')
         my_product_price = int(float(my_product_price))
 
-        print(my_product_price)
+        print(myprice)
 
         if my_product_price < every_product.get("target_price"):
             print("Available at your required price")
