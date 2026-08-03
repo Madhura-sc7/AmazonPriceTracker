@@ -76,4 +76,3 @@ try:
 
 finally:
     result_file.close()
-
