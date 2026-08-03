@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 
 
-
 products_to_track = [
     {
         "product_url": "https://www.amazon.in/Redmi-11-SE-Cosmic-White/dp/B0BHZN4NQ4/ref=sr_1_1?crid=8QSEZM5SM26X&dib=eyJ2IjoiMSJ9.WaEzFhnx6S6Cs2FOmhADP-yp102o28O5_HbeJcGm8dSM_jO4bbuR6dW4YjCsPuwANNtyDyB-OfJaaW_dMwVw8qghKcnQNOTW5zGqWZw9N26gideNHbQ50WmFB8dseFygelb3kEhV9kXojqvj70ziKWJsLNlwhePPAb76uziB0_RLEF9Crhq_3VFj9P0h40T72s3mF7uLAJwpPYg8A2dK37hlR5o7mSSamO70fJ5ISFk.h3U2hj3imbnt7CdrtWA4pROq1FnuTL6sYZrD6FZVbFY&dib_tag=se&keywords=redmi+11+to+20+k&qid=1746952515&sprefix=redmi+11+to+20+k+%2Caps%2C236&sr=8-1",
@@ -55,7 +54,7 @@ def give_product_price(URL):
     return product_price.get_text()
 
 
-result_file = open('my_result_file.text','w')
+result_file = open('result/my_result_file.text', 'r')
 
 try:
     for every_product in products_to_track:
@@ -77,4 +76,3 @@ try:
 
 finally:
     result_file.close()
-
